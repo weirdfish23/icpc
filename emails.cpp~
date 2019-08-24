@@ -66,7 +66,7 @@ int main (){
 				}
 				cout << "topo = " << topo[i] << endl;
                 cout << "c = " << c << endl;
-                cout << "vmax = " << vMax << endl;
+                cout << "vmax = " << vmax << endl;
 				if (c>max){
 					vMax = topo[i];
 					max = c;
