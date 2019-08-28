@@ -25,7 +25,10 @@ void dfsBridges(int u, int time){
             dfsBridges(v, time+1);
             low[u] = min(low[u], low[v]);
             if (low[v] > disc[u]){
-                bridges.push_back(make_pair(u, v));
+                if(u< v)
+                    bridges.push_back(make_pair(u, v));
+                else
+                    bridges.push_back(make_pair(v, u));
             }
         }else if(parent[u] != v){
             low[u] = min(low[u], disc[v]);
@@ -36,14 +39,11 @@ void dfsBridges(int u, int time){
 int main (){
     int T, N, u, v, k;
 
-    //scanf("%d", &T);
+    scanf("%d", &T);
 
-    //for(int t=0; t<T; ++t){
-    while(true){
+    for(int t=0; t<T; ++t){
 
-        if(scanf("%d", &N) == EOF)
-            break;
-
+        scanf("%d", &N);
         for(int i=0; i<N; ++i){
             low[i] = INF;
             disc[i] = 0;
@@ -69,19 +69,13 @@ int main (){
         } 
 
         sort(bridges.begin(), bridges.end());
-        //printf("Case %d:\n", t+1);
+        printf("Case %d:\n", t+1);
         printf("%d critical links\n", bridges.size());
         for(int i=0; i<bridges.size(); ++i){
             u = bridges[i].first;
             v = bridges[i].second;
-            if(v<u){
-                int temp = u;
-                u=v;
-                v=temp;
-            }
             printf("%d - %d\n", u, v);
         }
-        printf("\n");
 
     }
 
