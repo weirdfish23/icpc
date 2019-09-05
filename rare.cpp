@@ -8,6 +8,17 @@
 using namespace std;
 vector<int> adj[MAX];
 stack<int> TS;
+bool visited[MAX];
+
+void dfsTS(int u){
+    visited[u]= false;
+    for(int i=0; i<adj[u].size(); ++i){
+        int v = adj[u][i];
+        if(!visited[v])
+            dfsTS(v);
+    }
+    TS.push(u);
+}
 
 int main(){
     string line;
@@ -21,6 +32,7 @@ int main(){
         if(line[0] == '#')
             break;
         word.push_back(line);
+        //cout << "w: " << line << endl;
     }
     names.clear();
     int count=0;
@@ -37,20 +49,52 @@ int main(){
     string ant;
     int u, v;
 
-    for(int i=1 i<word.size(); ++i){
+    for(int i=1; i<word.size(); ++i){
         ant= aux;
         aux= word[i];
+        //cout << "ant: " << ant << endl;
+        //cout << "aux: " << aux << endl;
 
         int j=0;
         while(j<ant.size() && j<aux.size()){
             if(ant[j]==aux[j]){
                 ++j;
             }else{
-                u=             
+                if( names[ant[j]] == 0){
+                    names[ant[j]]= ++count;
+                    strs[count]=ant[j];
+                }
+                if( names[aux[j]] == 0){
+                    names[aux[j]]= ++count;
+                    strs[count]= aux[j];
+                }
+                u= names[ant[j]];
+                v = names[aux[j]];
+                adj[u].push_back(v);
+                break;
             }
         }
 
     }
+   // cout << "Letraas: " << endl;
+    for(int i=1; i<=count; ++i){
+        char cc = strs[i];
+        cout << cc;
+    }
+    cout << endl;
+
+    for(int i=1; i<=count; ++i){
+        if(!visited[i])
+            dfsTS(i);
+    }
+
+    while(!TS.empty()){
+        char c = strs[TS.top()];
+        //cout << c;
+        TS.pop();
+    }
+
+    //cout << endl;
 
     return 0;
 }
